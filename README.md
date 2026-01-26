@@ -1,4 +1,4 @@
-# INAPROC Helper Extension
+# INAMINDER
 
 Sebuah Chrome extension yang membantu mengelola pesanan dan negosiasi dari INAPROC dengan fitur tracking dan filtering.
 

@@ -1,8 +1,8 @@
 :root {
     --bg-red-primary: #D23554;
     --outline-red: brown;
-    --waiting: #F79009;
-    --urgent: #FFE016;
+    --warning: #FFE016;
+    --urgent: #F79009;
     --bg-green: rgb(160, 239, 159);
     --outline-green: #00C21D;
     --txt-danger: #FF0000;
@@ -113,7 +113,11 @@ body {
 }
 
 .card.warning {
-    background-color: var(--waiting);
+    background-color: var(--warning);
+}
+
+.card.warning > .due_date{
+    color: var(--bg-black);
 }
 
 .card.normal {
@@ -181,15 +185,11 @@ body {
 }
 
 .card.warning {
-    background-color: var(--waiting);
+    background-color: var(--warning);
 }
 
 .card.normal {
     background-color: var(--bg-white);
-}
-
-.status.waiting {
-    color: var(--waiting);
 }
 
 .status.approved {
@@ -197,12 +197,11 @@ body {
 }
 
 .status.urgent {
-    color: #d4941f;
+    /* color: #d4941f; */
     font-weight: 700;
 }
 
 .status.warning {
-    color: var(--waiting);
     font-weight: 700;
 }
 

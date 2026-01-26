@@ -1,8 +1,6 @@
 function getOrderData() {
-    const statusEl = document.querySelector('span[data-color]');
-    // const deadlineEl = [...document.querySelectorAll('p')];
-    const deadlineEl = [...document.querySelectorAll('p')][1];
-        // .find(p => p.innerText.includes('WIB'));
+    const statusEl = document.querySelectorAll('.flex.items-center.gap-x-1')[1];
+    const deadlineEl = [...document.querySelectorAll('p')][1].textContent;
 
     const labels = [...document.querySelectorAll('span')];
     const orderNumber = labels.find(el =>
@@ -11,26 +9,27 @@ function getOrderData() {
 
     if (!orderNumber || !statusEl) return null;
 
-    // Extract date from deadline text (format: "21 Jan 2026, 23:59 WIB")
-    const deadlineText = deadlineEl?.innerText ?? null;
-
     const regDate = /^\d{2}\s(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s\d{4}$/;
+    let dueDate = deadlineEl.split(',')[0].trim();
 
-    let dueDate = deadlineText;
+    // checking to regex
     if (regDate.test(dueDate) === true){
-      if (deadlineText && deadlineText.includes(',')) {
-        dueDate = deadlineText.split(',')[0].trim();
-        return dueDate;
+      dueDate
+    } else {
+      dueDate = "--";
+    }
+    const status = statusEl.querySelectorAll('span');
+    if (status.length == 2){
+      statusInfo = status[1].textContent;
+      if (statusInfo == "Menunggu Keputusan Pesanan"){
+        statusInfo = "Ditinjau PPK"
       }
     } else {
-      dueDate = "Ditinjau PPK";
-      return dueDate;
+      statusInfo = status[0].textContent;
     }
-    // console.log("Due Date :", dueDate)
-
     return {
         orderId: orderNumber,
-        status: statusEl.innerText,
+        status: statusInfo,
         dueDate: dueDate,
         url: location.href,
         context: detectOrderContext(statusEl.innerText),

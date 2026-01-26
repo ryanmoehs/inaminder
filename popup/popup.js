@@ -152,69 +152,69 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Add button functionality - scrape from current page
   addBtn?.addEventListener('click', () => {
-  console.log('[POPUP] Add button clicked');
+    console.log('[POPUP] Add button clicked');
 
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
 
-    // ❌ 1. Tidak ada tab aktif
-    if (!tabs || !tabs.length) {
-      console.error('[ERROR][TAB] No active tab found');
-      alert('Error: Tidak ada tab aktif');
-      return;
-    }
-
-    const tab = tabs[0];
-
-    // ❌ 2. URL bukan INAPROC
-    if (!tab.url || !tab.url.includes('penyedia.inaproc.id/negotiation')) {
-      console.error('[ERROR][URL] Invalid page:', tab.url);
-      alert('Error: Halaman bukan detail pesanan INAPROC');
-      return;
-    }
-
-    console.log('[POPUP] Active tab:', tab.id, tab.url);
-
-    chrome.tabs.sendMessage(
-      tab.id,
-      { type: 'GET_PAGE_DATA' },
-      (response) => {
-
-        // ❌ 3. Gagal kirim message
-        if (chrome.runtime.lastError) {
-          console.error(
-            '[ERROR][SEND_MESSAGE]',
-            chrome.runtime.lastError.message
-          );
-          alert('Error: Content script tidak aktif di halaman ini');
-          return;
-        }
-
-        // ❌ 4. Content tidak membalas
-        if (!response) {
-          console.error('[ERROR][RESPONSE] No response from content');
-          alert('Error: Tidak ada respon dari halaman');
-          return;
-        }
-
-        // ❌ 5. orderData null
-        if (!response.orderData) {
-          console.error('[ERROR][DATA] orderData is null', response);
-          alert('Error: Data pesanan tidak ditemukan di halaman');
-          return;
-        }
-
-        console.log('[SUCCESS] Order data received:', response.orderData);
-
-        chrome.runtime.sendMessage({
-          type: 'ADD_ORDER',
-          payload: response.orderData
-        });
-
-        setTimeout(() => renderOrders(), 500);
+      // ❌ 1. Tidak ada tab aktif
+      if (!tabs || !tabs.length) {
+        console.error('[ERROR][TAB] No active tab found');
+        alert('Error: Tidak ada tab aktif');
+        return;
       }
-    );
+
+      const tab = tabs[0];
+
+      // ❌ 2. URL bukan INAPROC
+      if (!tab.url || !tab.url.includes('penyedia.inaproc.id/negotiation')) {
+        console.error('[ERROR][URL] Invalid page:', tab.url);
+        alert('Error: Halaman bukan detail pesanan INAPROC');
+        return;
+      }
+
+      console.log('[POPUP] Active tab:', tab.id, tab.url);
+
+      chrome.tabs.sendMessage(
+        tab.id,
+        { type: 'GET_PAGE_DATA' },
+        (response) => {
+
+          // ❌ 3. Gagal kirim message
+          if (chrome.runtime.lastError) {
+            console.error(
+              '[ERROR][SEND_MESSAGE]',
+              chrome.runtime.lastError.message
+            );
+            alert('Error: Content script tidak aktif di halaman ini');
+            return;
+          }
+
+          // ❌ 4. Content tidak membalas
+          if (!response) {
+            console.error('[ERROR][RESPONSE] No response from content');
+            alert('Error: Tidak ada respon dari halaman');
+            return;
+          }
+
+          // ❌ 5. orderData null
+          if (!response.orderData) {
+            console.error('[ERROR][DATA] orderData is null', response);
+            alert('Error: Data pesanan tidak ditemukan di halaman');
+            return;
+          }
+
+          console.log('[SUCCESS] Order data received:', response.orderData);
+
+          chrome.runtime.sendMessage({
+            type: 'ADD_ORDER',
+            payload: response.orderData
+          });
+
+          setTimeout(() => renderOrders(), 500);
+        }
+      );
+    });
   });
-});
 
 
   // Listen for storage changes to update list in real-time

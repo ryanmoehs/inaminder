@@ -13,7 +13,6 @@ Sebuah Chrome extension yang membantu mengelola pesanan dan negosiasi dari INAPR
 ### 2. **Sorting Otomatis Berdasarkan Urgency**
 - Pesanan diurutkan dari yang paling mendesak (deadline terdekat)
 - **Kuning (Urgent)**: Deadline ≤ 1 hari
-- **Oranye (Warning)**: Deadline ≤ 2 hari
 - **Putih (Normal)**: Deadline > 2 hari
 
 ### 3. **Filter & Pencarian**

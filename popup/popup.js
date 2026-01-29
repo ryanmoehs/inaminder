@@ -1,6 +1,9 @@
 // Parse date string "DD Mon YYYY" to Date object
 function parseDate(dateStr) {
-  return new Date(dateStr);
+  if (!dateStr) return new Date('Invalid');
+
+  const cleaned = dateStr.split(',')[0].trim(); // buang jam
+  return new Date(`${cleaned} 00:00:00`);
 }
 
 // Format date for display
@@ -16,11 +19,12 @@ function formatDate(date) {
 function getUrgencyLevel(dueDate) {
   const now = new Date();
   const due = parseDate(dueDate);
-  const daysUntil = Math.ceil((due - now) / (1000 * 60 * 60 * 24));
+  if (isNaN(due)) return 'normal';
 
-  if (daysUntil <= 1) return 'urgent'; // Within 3 days = urgent (yellow)
-  if (daysUntil <= 2) return 'warning'; // Within 7 days = warning (orange)
-  return 'normal'; // Normal
+  const diffHours = (due - now) / (1000 * 60 * 60);
+
+  if (diffHours <= 24 && diffHours > 0) return 'urgent';
+  return 'normal';
 }
 
 // Load orders from Chrome storage
@@ -33,7 +37,12 @@ async function loadOrders() {
 }
 
 // Render orders list
-async function renderOrders(filterOrderId = '', filterDate = '') {
+async function renderOrders({
+    filterOrderId = '', 
+    filterDate = '',
+    filterStatus = '',
+    filterUrgency = ''
+ } = {}) {
   const orders = await loadOrders();
   const orderList = document.getElementById('orderList');
   orderList.innerHTML = '';
@@ -47,15 +56,33 @@ async function renderOrders(filterOrderId = '', filterDate = '') {
 
   // Sort by due date (closest first)
   orderArray.sort((a, b) => a.dueDateObj - b.dueDateObj);
+  function normalizeDate(dateStr) {
+    if (!dateStr) return '';
+    return dateStr.split(',')[0].trim(); // buang jam
+  }
 
   // Apply filters
-  if (filterOrderId || filterDate) {
+
     orderArray = orderArray.filter(order => {
-      const matchesOrderId = !filterOrderId || order.orderId.includes(filterOrderId);
-      const matchesDate = !filterDate || order.dueDate === filterDate;
-      return matchesOrderId && matchesDate;
+      const matchesOrderId =
+        !filterOrderId || order.orderId.includes(filterOrderId);
+
+      const matchesDate =
+        !filterDate || normalizeDate(order.dueDate) === filterDate;
+
+      const matchesStatus =
+        !filterStatus || order.status === filterStatus;
+
+      const matchesUrgency =
+        !filterUrgency || order.urgencyLevel === filterUrgency;
+
+      return (
+        matchesOrderId &&
+        matchesDate &&
+        matchesStatus &&
+        matchesUrgency
+      );
     });
-  }
 
   // Render filtered and sorted orders
   orderArray.forEach((order) => {
@@ -85,14 +112,6 @@ async function renderOrders(filterOrderId = '', filterDate = '') {
     `;
 
     orderList.appendChild(li);
-    
-    async function renderOrdersByContext(context) {
-      const orders = await loadOrders();
-      const filtered = Object.values(orders)
-        .filter(o => o.context === context);
-
-      renderOrdersFromArray(filtered);
-    }
 
 
   });
@@ -105,15 +124,6 @@ async function renderOrders(filterOrderId = '', filterDate = '') {
       deleteOrder(btn.dataset.orderId);
     });
   });
-
-  function applyActiveTab(activeTab) {
-    document.querySelectorAll('.btn_page').forEach(btn => {
-      btn.classList.toggle(
-        'active',
-        btn.dataset.tab === activeTab
-      );
-    });
-  }
 
 }
 
@@ -131,24 +141,29 @@ async function deleteOrder(orderId) {
 document.addEventListener('DOMContentLoaded', async () => {
   const searchInputOrderId = document.querySelector('.search input[type="text"]');
   const searchInputDate = document.querySelector('.search input[type="date"]');
+  const statusPicker = document.getElementById('status_picker');
+  const urgencyPicker = document.getElementById('urgency_picker');
+
   const addBtn = document.querySelector('.btn_add');
 
   // Load and render orders on popup open
   renderOrders();
 
-  // Search by order ID
-  searchInputOrderId?.addEventListener('input', (e) => {
-    const filterOrderId = e.target.value;
-    const filterDate = searchInputDate?.value ? formatDateForInput(searchInputDate.value) : '';
-    renderOrders(filterOrderId, filterDate);
-  });
+  function applyFilters() {
+    renderOrders({
+      filterOrderId: searchInputOrderId.value,
+      filterDate: searchInputDate.value
+        ? formatDateForInput(searchInputDate.value)
+        : '',
+      filterStatus: statusPicker.value,
+      filterUrgency: urgencyPicker.value
+    });
+  }
+  searchInputOrderId?.addEventListener('input', applyFilters);
+  searchInputDate?.addEventListener('change', applyFilters);
+  statusPicker?.addEventListener('change', applyFilters);
+  urgencyPicker?.addEventListener('change', applyFilters);
 
-  // Search by date
-  searchInputDate?.addEventListener('change', (e) => {
-    const filterDate = e.target.value ? formatDateForInput(e.target.value) : '';
-    const filterOrderId = searchInputOrderId?.value || '';
-    renderOrders(filterOrderId, filterDate);
-  });
 
   // Add button functionality - scrape from current page
   addBtn?.addEventListener('click', () => {
@@ -166,7 +181,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const tab = tabs[0];
 
       // ❌ 2. URL bukan INAPROC
-      if (!tab.url || !tab.url.includes('penyedia.inaproc.id/negotiation')) {
+      if (!tab.url || !tab.url.includes('penyedia.inaproc.id/negotiation') || !tab.url.includes('penyedia.inaproc.id/order')) {
         console.error('[ERROR][URL] Invalid page:', tab.url);
         alert('Error: Halaman bukan detail pesanan INAPROC');
         return;
@@ -220,7 +235,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Listen for storage changes to update list in real-time
   chrome.storage.onChanged.addListener((changes, areaName) => {
     if (areaName === 'local' && changes.orders) {
-      renderOrders();
+      applyFilters();
     }
   });
 });

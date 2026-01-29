@@ -1,6 +1,7 @@
 function getOrderData() {
     const statusEl = document.querySelectorAll('.flex.items-center.gap-x-1')[1];
     const deadlineEl = [...document.querySelectorAll('p')][1].textContent;
+    
 
     const labels = [...document.querySelectorAll('span')];
     const orderNumber = labels.find(el =>
@@ -18,14 +19,21 @@ function getOrderData() {
     } else {
       dueDate = "--";
     }
-    const status = statusEl.querySelectorAll('span');
-    if (status.length == 2){
-      statusInfo = status[1].textContent;
-      if (statusInfo == "Menunggu Keputusan Pesanan"){
-        statusInfo = "Ditinjau PPK"
-      }
+
+    if (window.location.href.includes('https://penyedia.inaproc.id/order') === true){
+      const status = statusOrder.querySelectorAll('span');
+      statusInfo = status[0].textContent
     } else {
-      statusInfo = status[0].textContent;
+      const status = statusEl.querySelectorAll('span');
+      if (status.length == 2){
+        statusInfo = status[1].textContent;
+        if (statusInfo == "Menunggu Keputusan Pesanan"){
+          statusInfo = "Ditinjau PPK"
+        }
+      } else {
+        statusInfo = status[0].textContent;
+      }
+
     }
     return {
         orderId: orderNumber,

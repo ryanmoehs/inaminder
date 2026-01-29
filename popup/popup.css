@@ -1,8 +1,9 @@
 :root {
     --bg-red-primary: #D23554;
     --outline-red: brown;
-    --warning: #FFE016;
-    --urgent: #F79009;
+    /* --warning: #FFE016; */
+    /* --urgent: #F79009; */
+    --urgent: #FFE016;
     --bg-green: rgb(160, 239, 159);
     --outline-green: #00C21D;
     --txt-danger: #FF0000;
@@ -76,7 +77,7 @@ body {
 
 }
 
-.nav_menu button{
+/* .nav_menu button{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -85,13 +86,21 @@ body {
     padding: 4px;
     border-radius: 5px;
     background-color: var(--bg-card-primary);
-}
+} */
 
-.btn_page.active {
+/* .btn_page.active {
     background-color: var(--bg-red-primary);
     color: var(--bg-card-primary);
+} */
+
+.nav_menu select {
+    padding: 10px;
+    border-radius: 5px;
 }
 
+.nav_menu option:hover {
+    background-color: var(--bg-red-primary);
+}
 /* ================= CARD ================= */
 .card {
     display: flex;

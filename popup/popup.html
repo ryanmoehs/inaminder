@@ -20,85 +20,32 @@
         <input type="date" name="" id="" />
       </div>
       <div class="nav_menu">
-        <button class="btn_page" data-tab="NEGOSIASI">
+        <!-- <button class="btn_page" data-tab="NEGOSIASI">
           <img src="../assets/nego_black.png" style="width: 20px;" alt="">Negosiasi
         </button class="btn_page" data-tab="ORDER">
         <button>
           <img src="../assets/order_black.png" style="width: 20px;" alt="">Order
-        </button>
+        </button> -->
+        <select name="status_picker" id="status_picker">
+          <option value="" disabled selected>Pilih Status...</option>
+          <option value="Menunggu Konfirmasi Penyedia">Menunggu Konfirmasi Penyedia</option>
+          <option value="Menunggu Konfirmasi Pembeli">Menunggu Konfirmasi Pembeli</option>
+          <option value="Ditinjau PPK">Ditinjau PPK</option>
+          <option value="Menunggu Respon Penyedia">Menunggu Respon Penyedia</option>
+          <option value="Menunggu Respon Pembeli">Menunggu Respon Pembeli</option>
+          <option value="Pesanan Dibatalkan">Pesanan Dibatalkan</option>
+          <option value="Disetujui Penyedia">Disetujui Penyedia</option>
+          <option value="Dibatalkan Otomatis">Dibatalkan Otomatis</option>
+        </select>
+
+        <select name="urgency_picker" id="urgency_picker">
+          <option value="Semua">Semua</option>
+          <option value="Urgent">Urgent</option>
+          <option value="Warning">Warning</option>
+        </select>
       </div>
       <ul id="orderList">
         <li class="card urgent">
-          <div class="card_desc">
-            <div class="no_pesanan">EP-01KDT5SGCRTYH8NV9ZKJSN4E63</div>
-            <div class="due_date">08 Jan 2026</div>
-            <div class="status">Menunggu Respon Penyedia</div>
-          </div>
-
-          <div class="card_btn">
-            <div class="card_btn_visit">
-              <a
-                href="https://penyedia.inaproc.id/order/detail?id=01KDT5SGCRTYH8NV9ZKJSN4E63&orderKey=f40adb05-6316-4886-835d-e7c592734b4c"
-              >
-                <img src="../assets/link_ext_black.png" alt="">
-              </a>
-            </div>
-            <div class="card_btn_delete">
-              <a
-                href="https://penyedia.inaproc.id/order/detail?id=01KDT5SGCRTYH8NV9ZKJSN4E63&orderKey=f40adb05-6316-4886-835d-e7c592734b4c"
-              >
-                <img src="../assets/delete.png" alt="">
-              </a>
-            </div>
-          </div>
-        </li>
-        <li class="card">
-          <div class="card_desc">
-            <div class="no_pesanan">EP-01KDT5SGCRTYH8NV9ZKJSN4E63</div>
-            <div class="due_date">08 Jan 2026</div>
-            <div class="status waiting">Menunggu Respon Pembeli</div>
-          </div>
-
-          <div class="card_btn">
-            <div class="card_btn_visit">
-              <a
-                href="https://penyedia.inaproc.id/order/detail?id=01KDT5SGCRTYH8NV9ZKJSN4E63&orderKey=f40adb05-6316-4886-835d-e7c592734b4c"
-              >
-                <img src="../assets/link_ext_black.png" alt="">
-              </a>
-            </div>
-            <div class="card_btn_delete">
-              <a
-                href="https://penyedia.inaproc.id/order/detail?id=01KDT5SGCRTYH8NV9ZKJSN4E63&orderKey=f40adb05-6316-4886-835d-e7c592734b4c"
-              >
-                <img src="../assets/delete.png" alt="">
-              </a>
-            </div>
-          </div>
-        </li>
-        <li class="card">
-          <div class="card_desc">
-            <div class="no_pesanan">EP-01KDT5SGCRTYH8NV9ZKJSN4E63</div>
-            <div class="due_date">08 Jan 2026</div>
-            <div class="status approved">Disetujui Pembeli</div>
-          </div>
-
-          <div class="card_btn">
-            <div class="card_btn_visit">
-              <a
-                href="https://penyedia.inaproc.id/order/detail?id=01KDT5SGCRTYH8NV9ZKJSN4E63&orderKey=f40adb05-6316-4886-835d-e7c592734b4c"
-              >
-                <img src="../assets/link_ext_black.png" alt="">
-              </a>
-            </div>
-            <div class="card_btn_delete">
-              <a
-                href="https://penyedia.inaproc.id/order/detail?id=01KDT5SGCRTYH8NV9ZKJSN4E63&orderKey=f40adb05-6316-4886-835d-e7c592734b4c"
-              >
-                <img src="../assets/delete.png" alt="">
-              </a>
-            </div>
-          </div>
         </li>
       </ul>
     </div>

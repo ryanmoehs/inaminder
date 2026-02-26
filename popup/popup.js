@@ -1,3 +1,10 @@
+// info modal
+const favDialog = document.getElementById("favDialog");
+const showInfo = document.getElementById("showInfo");
+showInfo.addEventListener("click", () => {
+  favDialog.showModal();
+})
+
 // Parse date string "DD Mon YYYY" to Date object
 function parseDate(dateStr) {
   if (!dateStr) return new Date('Invalid');
@@ -261,3 +268,31 @@ function formatDateForInput(inputDate) {
   const year = date.getFullYear();
   return `${day} ${month} ${year}`;
 }
+
+// Buka halaman panduan
+document.getElementById('openGuide')?.addEventListener('click', () => {
+  chrome.tabs.create({
+    url: chrome.runtime.getURL('guide.html')
+  });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Navigasi antar halaman via tab
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Update active button
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      // Show selected page
+      const pageId = btn.dataset.page;
+      document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+      document.getElementById(`page-${pageId}`).classList.add('active');
+    });
+  });
+
+  // Tombol kembali dari panduan ke daftar pesanan
+  document.querySelector('.back-to-orders-btn')?.addEventListener('click', () => {
+    document.querySelector('[data-page="orders"]').click();
+  });
+});

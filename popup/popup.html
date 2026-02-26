@@ -9,45 +9,129 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=delete" />
   </head>
   <body>
-    <div class="header flex items-center ">
-      <img src="../assets/icon48.png" class="w-16" alt="INAMINDER Logo" />
-      <h3>INA<span>MINDER</span></h3>
+    <div class="header-wrapper">
+      <div class="header">
+        <img src="../assets/icon48.png" alt="INAMINDER Logo" />
+        <h3>INA<span>MINDER</span></h3>
+      </div>
+      
+      <div id="infoModal" class="modal">
+        <button id="showInfo">
+          <img src="../assets/info_black.png" alt="About" />
+        </button>
+      </div>
+
+      <dialog id="favDialog">
+        <form method="dialog">
+          <h3 class="dialog_title">Tentang</h3>
+          <p>ryanmoehs © 2026 | MIT License</p>
+          <p>Aplikasi ini open-source. Segala kode sumber dapat dilihat di <a href="https://github.com/ryanmoehs/inaminder">sini</a>.<br/>Anda dapat memberikan dukungan kepada pengembang dengan mengirimkan donasi melalui <a href="https://saweria.co/ryanmoehs">Saweria</a> dan komentar pada repo Github.</p>
+          <button class="btn-close-modal">Tutup</button>
+        </form>
+      </dialog>
     </div>
 
-    <div class="content">
-      <div class="search">
-        <input type="text" placeholder="Cari Nama CC" />
-        <input type="date" name="" id="" />
-      </div>
-      <div class="nav_menu">
-        <!-- <button class="btn_page" data-tab="NEGOSIASI">
-          <img src="../assets/nego_black.png" style="width: 20px;" alt="">Negosiasi
-        </button class="btn_page" data-tab="ORDER">
-        <button>
-          <img src="../assets/order_black.png" style="width: 20px;" alt="">Order
-        </button> -->
-        <select name="status_picker" id="status_picker">
-          <option value="" disabled selected>Pilih Status...</option>
-          <option value="Menunggu Konfirmasi Penyedia">Menunggu Konfirmasi Penyedia</option>
-          <option value="Menunggu Konfirmasi Pembeli">Menunggu Konfirmasi Pembeli</option>
-          <option value="Ditinjau PPK">Ditinjau PPK</option>
-          <option value="Menunggu Respon Penyedia">Menunggu Respon Penyedia</option>
-          <option value="Menunggu Respon Pembeli">Menunggu Respon Pembeli</option>
-          <option value="Pesanan Dibatalkan">Pesanan Dibatalkan</option>
-          <option value="Disetujui Penyedia">Disetujui Penyedia</option>
-          <option value="Dibatalkan Otomatis">Dibatalkan Otomatis</option>
-        </select>
+    <div class="nav-header">
+      <button class="nav-btn active" data-page="orders">📋 Daftar Pesanan</button>
+      <button class="nav-btn" data-page="guide">📖 Panduan</button>
+    </div>
 
-        <select name="urgency_picker" id="urgency_picker">
-          <option value="" selected>Semua</option>
-          <option value="normal">Normal</option>
-          <option value="urgent">Urgent</option>
-        </select>
+    <div id="page-orders" class="page active">
+      <div class="content">
+        <div class="search">
+          <input type="text" placeholder="Cari Nama CC" />
+          <input type="date" name="" id="" />
+        </div>
+        <div class="nav_menu">
+          <select name="status_picker" id="status_picker">
+            <option value="" disabled selected>Pilih Status...</option>
+            <option value="Menunggu Konfirmasi Penyedia">Menunggu Konfirmasi Penyedia</option>
+            <option value="Menunggu Konfirmasi Pembeli">Menunggu Konfirmasi Pembeli</option>
+            <option value="Ditinjau PPK">Ditinjau PPK</option>
+            <option value="Menunggu Respon Penyedia">Menunggu Respon Penyedia</option>
+            <option value="Menunggu Respon Pembeli">Menunggu Respon Pembeli</option>
+            <option value="Pesanan Dibatalkan">Pesanan Dibatalkan</option>
+            <option value="Disetujui Penyedia">Disetujui Penyedia</option>
+            <option value="Dibatalkan Otomatis">Dibatalkan Otomatis</option>
+          </select>
+
+          <select name="urgency_picker" id="urgency_picker">
+            <option value="" selected>Semua</option>
+            <option value="normal">Normal</option>
+            <option value="urgent">Urgent</option>
+          </select>
+        </div>
+        <ul id="orderList">
+          <li class="card urgent">
+          </li>
+        </ul>
       </div>
-      <ul id="orderList">
-        <li class="card urgent">
-        </li>
-      </ul>
+    </div>
+    
+    <div id="page-guide" class="page">
+      <div class="guide-container">
+        <h2 class="guide-title">📖 Panduan Penggunaan</h2>
+        
+        <div class="guide-section">
+          <h3>Cara Menyimpan Pesanan</h3>
+          <ol>
+            <li>Buka halaman detail negosiasi/order di <code>penyedia.inaproc.id</code></li>
+            <li>Klik tombol <strong>"+ Tambahkan Halaman Ini"</strong> di footer</li>
+            <li>Pesanan akan tersimpan dan muncul di daftar</li>
+          </ol>
+        </div>
+
+        <div class="guide-section">
+          <h3>Fitur Notifikasi</h3>
+          <ul>
+            <li><span class="badge urgent-badge">🟡 Kuning</span> = Deadline ≤ 24 jam (URGENT)</li>
+            <li>🔔 Notifikasi muncul saat status pesanan berubah</li>
+            <li>🔴 Badge merah di ikon extension = jumlah pesanan urgent</li>
+          </ul>
+        </div>
+
+        <div class="guide-section">
+          <h3>Filter & Pencarian</h3>
+          <ul>
+            <li><strong>Cari Nama CC</strong> - Mencocokkan sebagian nama (tidak peduli huruf besar/kecil)</li>
+            <li><strong>Filter Status</strong> - Berdasarkan status pesanan</li>
+            <li><strong>Filter Urgensi</strong> - Normal / Urgent / Semua</li>
+            <li><strong>Filter Tanggal</strong> - Berdasarkan deadline</li>
+          </ul>
+        </div>
+
+        <div class="guide-section">
+          <h3>Status yang Sering Muncul</h3>
+          <ul>
+            <li><strong>Menunggu Konfirmasi Penyedia</strong> - Perlu dicek dan dikonfirmasi</li>
+            <li><strong>Menunggu Respon Pembeli</strong> - Menunggu tindakan dari pembeli</li>
+            <li><strong>Ditinjau PPK</strong> - Dalam proses review oleh PPK</li>
+            <li><strong>Selesai</strong> - Pesanan telah selesai</li>
+          </ul>
+        </div>
+
+        <div class="guide-section">
+          <h3>Arti Warna Card</h3>
+          <ul>
+            <li><span style="background: #FFE016; padding: 2px 8px; border-radius: 12px;">🟡 Kuning</span> - Urgent (deadline ≤ 24 jam)</li>
+            <li><span style="background: white; padding: 2px 8px; border: 1px solid #ddd; border-radius: 12px;">⚪ Putih</span> - Normal</li>
+          </ul>
+        </div>
+
+        <div class="guide-section">
+          <h3>Tips Penggunaan</h3>
+          <ul>
+            <li>Extension akan otomatis menyimpan data saat Anda membuka halaman pesanan</li>
+            <li>Data tersimpan secara lokal di browser Anda</li>
+            <li>Gunakan filter untuk memudahkan pencarian</li>
+            <li>Hapus pesanan yang sudah tidak perlu dengan klik icon sampah</li>
+          </ul>
+        </div>
+
+        <div class="guide-footer">
+          <button class="back-to-orders-btn">← Kembali ke Daftar Pesanan</button>
+        </div>
+      </div>
     </div>
     <footer>
       <button class="btn_add">+ Tambahkan Halaman Ini</button>

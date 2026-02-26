@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "INAMINDER",
     "version": "1.0",
-    "description": "An extension for INAPROC negotiation and orders reminder.",
+    "description": "Pengingat Negosiasi dan Pesanan INAPROC",
     "icons": {
         "48": "assets/icon48.png",
         "128": "assets/icon128.png"

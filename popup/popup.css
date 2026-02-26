@@ -26,7 +26,7 @@ body {
 
 /* header */
 
-.header-wrapper{
+.header_wrapper{
     display: flex;
     justify-content: space-between;
 }
@@ -59,7 +59,7 @@ dialog {
     text-align: center;
 }
 
-.btn-close-modal {
+.btn_close_modal {
     width: 100%;
     padding: 12px;
     border-radius: 8px;
@@ -95,7 +95,7 @@ dialog {
 }
 
 /* nav tab */
-.nav-header {
+.nav_header {
     display: flex;
     gap: 8px;
     margin-bottom: 15px;
@@ -104,7 +104,7 @@ dialog {
     padding: 4px;
 }
 
-.nav-btn {
+.nav_btn {
     flex: 1;
     padding: 8px 0;
     border: none;
@@ -117,12 +117,12 @@ dialog {
     transition: all 0.2s ease;
 }
 
-.nav-btn:hover {
+.nav_btn:hover {
     background: rgba(210, 53, 84, 0.1);
     color: var(--bg-red-primary);
 }
 
-.nav-btn.active {
+.nav_btn.active {
     background: var(--bg-white);
     color: var(--bg-red-primary);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -348,34 +348,34 @@ dialog {
 }
 
 /* ================= GUIDE PAGE ================= */
-#page-guide {
+#page_guide {
     background: #fafafa;
     border-radius: 10px;
     padding: 12px;
     border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.guide-container {
+.guide_container {
     max-height: 350px;
     overflow-y: auto;
     padding-right: 6px;
 }
 
-.guide-container::-webkit-scrollbar {
+.guide_container::-webkit-scrollbar {
     width: 6px;
 }
 
-.guide-container::-webkit-scrollbar-track {
+.guide_container::-webkit-scrollbar-track {
     background: #f1f1f1;
     border-radius: 10px;
 }
 
-.guide-container::-webkit-scrollbar-thumb {
+.guide_container::-webkit-scrollbar-thumb {
     background: #ccc;
     border-radius: 10px;
 }
 
-.guide-title {
+.guide_title {
     font-size: 18px;
     color: var(--bg-red-primary);
     margin: 0 0 16px 0;
@@ -385,7 +385,7 @@ dialog {
     font-weight: 600;
 }
 
-.guide-section {
+.guide_section {
     background: white;
     border-radius: 10px;
     padding: 14px;
@@ -394,7 +394,7 @@ dialog {
     border: 1px solid rgba(210, 53, 84, 0.1);
 }
 
-.guide-section h3 {
+.guide_section h3 {
     font-size: 14px;
     margin: 0 0 10px 0;
     color: var(--text-dark);
@@ -404,15 +404,15 @@ dialog {
     font-weight: 600;
 }
 
-/* .guide-section h3::before {
+/* .guide_section h3::before {
     content: "•";
     color: var(--bg-red-primary);
     font-size: 20px;
     line-height: 1;
 } */
 
-.guide-section ol,
-.guide-section ul {
+.guide_section ol,
+.guide_section ul {
     margin: 0;
     padding-left: 24px;
     font-size: 12px;
@@ -420,15 +420,15 @@ dialog {
     color: #555;
 }
 
-.guide-section li {
+.guide_section li {
     margin-bottom: 6px;
 }
 
-.guide-section li:last-child {
+.guide_section li:last-child {
     margin-bottom: 0;
 }
 
-.guide-section code {
+.guide_section code {
     background: #f0f0f0;
     padding: 2px 6px;
     border-radius: 4px;
@@ -437,11 +437,11 @@ dialog {
     font-family: monospace;
 }
 
-.guide-section strong {
+.guide_section strong {
     color: var(--bg-red-primary);
 }
 
-.urgent-badge {
+.urgent_badge {
     background: var(--urgent);
     padding: 3px 10px;
     border-radius: 20px;
@@ -451,7 +451,7 @@ dialog {
     border: 1px solid #e6c200;
 }
 
-.guide-footer {
+.guide_footer {
     text-align: center;
     margin-top: 20px;
     margin-bottom: 5px;
